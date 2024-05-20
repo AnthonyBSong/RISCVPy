@@ -1,28 +1,19 @@
 class program_counter():
-    global instruction_size # placeholder, need to think of 
-                            # how we will deal with this.
-    instruction_size = 4
-
-    def __init__(self, address, _opcode, _immediate): # immediate is 12 bits
+    def __init__(self, address): # immediate is 12 bits
         self.address = address
-        self.next = self.address + instruction_size
-        self._opcode = _opcode
-        self._immediate = _immediate
-    
-    def __iter__(self):
-        return self.address
+        self.next = self.address + 4
 
-    def __next__(self):
-        return self.next()
-    
-    def set_addr(self, new_address):
+    def set_addr(self, new_address, offset):
         self.address = new_address
-        self.next = self.address + instruction_size
+        self.next = self.address + offset
 
-    def next(self):
+    def next(self, opcode, offset):
         if self.address < 2**31:
-            temp = self.address
-            self.set_addr(self.next)
-            # returns current & next addresses
-            return temp, self.address
-        raise StopIteration()
+            if opcode == 0b1100011:
+                self.set_addr(self.next, offset)
+            else:
+                self.set_addr(self.next, 4)
+        else:
+            self.set_addr(0, 4)
+
+    
