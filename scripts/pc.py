@@ -1,5 +1,5 @@
 class program_counter():
-    def __init__(self, address): # immediate is 12 bits
+    def __init__(self, address):
         self.address = address
         self.next = self.address + 4
 
@@ -8,6 +8,9 @@ class program_counter():
         self.next = self.address + offset
 
     def next(self, opcode, offset):
+        if len(bin(offset)) > 12:
+            raise offset
+
         if self.address < 2**31:
             if opcode == 0b1100011:
                 self.set_addr(self.next, offset)
