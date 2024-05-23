@@ -7,7 +7,7 @@ class Decoder:
         print(f"Instruction type: {type}")
 
     def invalid_instruction(self, instruction, opcode):
-        print(f"Given instruction {instruction} does not have a valid opcode\nInvalid opcode: {opcode}")
+        print(f"Given instruction {instruction} does not have a valid/supported opcode\nInvalid opcode: {opcode}")
         quit()
 
     def parse_op(self, instruction) -> str:
@@ -37,5 +37,7 @@ if __name__ == '__main__':
     decoder.decode(instruction_add)
     print()
     decoder.decode(instruction_addi)
+    print()
+    decoder.decode(instruction_stype)
     print()
     decoder.decode(instruction_invalid)
