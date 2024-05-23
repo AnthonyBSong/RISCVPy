@@ -1,40 +1,36 @@
 from ImmediateError import ImmediateError # type: ignore
 
 class Decoder:
-    def __init__(self):
-        pass
-
     def decode(self, instruction):
         type = self.parse_op(instruction)
 
         print(f"Instruction type: {type}")
 
-        if type == "NA":
-            print(f"Given instruction {instruction} does not have a valid opcode")
-            quit()
+    def invalid_instruction(self, instruction, opcode):
+        print(f"Given instruction {instruction} does not have a valid opcode\nInvalid opcode: {opcode}")
+        quit()
 
     def parse_op(self, instruction) -> str:
-        op_code = instruction[len(instruction)-7: len(instruction)]
+        opcode = instruction[len(instruction)-7: len(instruction)]
 
-        print(f"op code: {op_code}")
+        print(f"op code: {opcode}")
 
-        if op_code == "0110011":
+        if opcode == "0110011":
             return "R"
-        elif op_code == "0010011":
+        elif opcode == "0010011" or opcode == "0000011" or opcode == "1100111" or opcode == "1110011":
             return "I"
-        elif op_code == "0100011":
+        elif opcode == "0100011":
             return "S"
-        elif op_code == "0110111" or op_code == "0010111":
+        elif opcode == "0110111" or opcode == "0010111":
             return "U"
         else:
-            return "NA"
+            self.invalid_instruction(instruction, opcode)
 
 if __name__ == '__main__':
     instruction_add = "0b0000000xxxxxyyyyy000zzzzz0110011"
     instruction_addi = "0bxxxxxxxxxxxxyyyyy000zzzzz0010011"
     instruction_invalid = "0bxxxxxxxxxxxxyyyyy000zzzzz0011111"
-
-    print(len(instruction_add))
+    instruction_stype = "0bxxxxxxxxxxxxxxxxxxxxxxxxx0100011"
 
     decoder = Decoder()
 

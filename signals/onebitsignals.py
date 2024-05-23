@@ -1,4 +1,4 @@
-import NotSignal
+import NotSignal # type: ignore
 
 class OneBitSignal():
     def __init__(self, signal):
