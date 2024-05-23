@@ -9,7 +9,7 @@ class Decoder:
 
         print(f"Instruction type: {type}")
 
-    def parse_op(self, instruction):
+    def parse_op(self, instruction) -> str:
         op_code = instruction[len(instruction)-7: len(instruction)]
 
         print(f"op code: {op_code}")
@@ -18,6 +18,10 @@ class Decoder:
             return "R"
         elif op_code == "0010011":
             return "I"
+        elif op_code == "0100011":
+            return "S"
+        elif op_code == "0110111" or op_code == "0010111":
+            return "U"
 
 if __name__ == '__main__':
     instruction_add = "0b0000000xxxxxyyyyy000zzzzz0110011"
