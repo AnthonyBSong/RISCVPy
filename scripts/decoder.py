@@ -9,6 +9,10 @@ class Decoder:
 
         print(f"Instruction type: {type}")
 
+        if type == "NA":
+            print(f"Given instruction {instruction} does not have a valid opcode")
+            quit()
+
     def parse_op(self, instruction) -> str:
         op_code = instruction[len(instruction)-7: len(instruction)]
 
@@ -22,14 +26,20 @@ class Decoder:
             return "S"
         elif op_code == "0110111" or op_code == "0010111":
             return "U"
+        else:
+            return "NA"
 
 if __name__ == '__main__':
     instruction_add = "0b0000000xxxxxyyyyy000zzzzz0110011"
     instruction_addi = "0bxxxxxxxxxxxxyyyyy000zzzzz0010011"
+    instruction_invalid = "0bxxxxxxxxxxxxyyyyy000zzzzz0011111"
 
     print(len(instruction_add))
 
     decoder = Decoder()
 
     decoder.decode(instruction_add)
+    print()
     decoder.decode(instruction_addi)
+    print()
+    decoder.decode(instruction_invalid)
