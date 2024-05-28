@@ -1,3 +1,5 @@
-class NotSignal(Exception):
-    def __init__(self, messsage):
-        self.message = messsage
+class NotSignalException(Exception):
+    def __init__(self, m):
+        self.message = m
+    def __str__(self):
+        return self.message
