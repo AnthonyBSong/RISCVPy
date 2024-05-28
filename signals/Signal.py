@@ -2,7 +2,7 @@ from typing import Any
 from NotSignal import NotSignalException
 import string
 
-class Signal():
+class Signal(object):
     def __init__(self, _signal, _msb):
         self.signal = [0] * 32
 
@@ -42,13 +42,18 @@ class Signal():
             print(exception)
             self.signal = temp # guarenteed to be legal by invariant
             
-    def __getitem__(self, index : slice): # begin inclusive, end non-inclusive
-        to_ret = 0
-        signal_slice = self.signal[slice(32 - index.start, 32 - index.stop)]
-        for i in range(index.start, index.stop + 1):
-            to_ret += signal_slice[i] * (2 ** i)
-        return bin(to_ret)
+    def __getitem__(self, index) -> int: # begin inclusive, end non-inclusive
+        if type(index) == int:
+            return bin(self.signal[31-index])
+        else: 
+            to_ret = 0
+            print(31 - index.stop, 31 - index.start - 1)
+            for i in range(31 - index.stop, 31 - index.start - 1, -1):
+                to_ret += self.signal[i] * (2 ** (31 - i))
+            return bin(to_ret)
     
 
 if __name__ == "__main__":
-    x = Signal(0b111, 0)
+    x = Signal(0b000000101010101110, 1)
+    print(x[0])
+    print(x[2:0])
