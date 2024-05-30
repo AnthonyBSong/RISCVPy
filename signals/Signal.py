@@ -1,6 +1,5 @@
 from typing import Any
 from NotSignal import NotSignalException
-import string
 
 class Signal(object):
     def __init__(self, _signal, _msb):
